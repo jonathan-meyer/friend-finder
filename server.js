@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.get("/", express.static("public"));
+app
+  .use("/api", require("./app/routing/apiRoutes"))
+  .use("/", require("./app/routing/htmlRoutes"))
 
-app.listen(process.env.PORT || 3000, () => {});
+  .listen(port, err => {
+    console.log(`Listening to port ${port}`);
+  });
