@@ -4,15 +4,22 @@
   "description": "Lets find a friend (because Facebook sucks)",
   "main": "server.js",
   "scripts": {
+    "dev": "nodemon .",
     "test": "jest",
-    "start": "node server.js"
+    "build": "test",
+    "start": "node ."
   },
   "author": "Jonathan Meyer",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "read-json": "^1.0.3",
+    "write-json": "^3.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonathan-meyer/friend-finder.git"
