@@ -9,6 +9,18 @@ const all = () => {
   return data;
 };
 
+const add = (name, photo = "/avatar-blank-male.png", scores = []) => {
+  if (typeof name !== "string" || name.length === 0) {
+    throw "name param required";
+  }
+  
+  let data = readJson.sync(file);
+  data.push({ name, photo, scores });
+  writeJson.sync(file, data);
+  return data;
+};
+
 module.exports = {
-  all
+  all,
+  add
 };

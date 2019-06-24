@@ -7,7 +7,8 @@ router.get("/friends", (req, res) => {
 });
 
 router.post("/friends", (req, res) => {
-  res.json({ a: 1 });
+  const { body } = req;
+  res.json(friends.add(body.name, body.photo, body.scores));
 });
 
 module.exports = router;
