@@ -14,65 +14,66 @@
           console.log($(this).serializeArray());
         });
 
-        [
-          { id: 0, text: "I like the blue sky." },
-          { id: 1, text: "I like the blue water." }
-        ].map(function(q) {
-          $("#questions")
-            .addClass("")
-            .append(
-              $("<div>")
-                .addClass("card mb-3")
+        $.get("/api/questions")
+          .then(data =>
+            data.map(function(q) {
+              $("#questions")
+                .addClass("")
                 .append(
                   $("<div>")
-                    .addClass("card-header")
+                    .addClass("card mb-3")
                     .append(
-                      $("<label>")
-                        .attr({ for: `question_${q.id}` })
-                        .text(q.text)
-                    ),
-                  $("<div>")
-                    .addClass("card-body")
-                    .append(
-                      $("<datalist>")
-                        .attr({ id: `${q.id}_ticks` })
-                        .css({
-                          display: "flex",
-                          justifyContent: "space-between"
-                        })
+                      $("<div>")
+                        .addClass("card-header")
                         .append(
-                          new Array(5)
-                            .fill(0)
-                            .map((v, i) => i + 1)
-                            .map(function(v) {
-                              return $("<option>")
-                                .attr({
-                                  value: v,
-                                  label:
-                                    v === 1
-                                      ? "Strongly Disagree"
-                                      : v === 5
-                                      ? "Strongly Agree"
-                                      : ""
-                                })
-                                .css({ fontSize: "x-small" });
-                            })
+                          $("<label>")
+                            .attr({ for: `question_${q.id}` })
+                            .text(q.text)
                         ),
-                      $("<input>")
-                        .addClass("form-control-range")
-                        .attr({
-                          type: "range",
-                          list: `${q.id}_ticks`,
-                          id: `question_${q.id}`,
-                          name: `question_${q.id}`,
-                          min: 1,
-                          max: 5,
-                          value: 3
-                        })
+                      $("<div>")
+                        .addClass("card-body")
+                        .append(
+                          $("<datalist>")
+                            .attr({ id: `${q.id}_ticks` })
+                            .css({
+                              display: "flex",
+                              justifyContent: "space-between"
+                            })
+                            .append(
+                              new Array(5)
+                                .fill(0)
+                                .map((v, i) => i + 1)
+                                .map(function(v) {
+                                  return $("<option>")
+                                    .attr({
+                                      value: v,
+                                      label:
+                                        v === 1
+                                          ? "Strongly Disagree"
+                                          : v === 5
+                                          ? "Strongly Agree"
+                                          : ""
+                                    })
+                                    .css({ fontSize: "x-small" });
+                                })
+                            ),
+                          $("<input>")
+                            .addClass("form-control-range")
+                            .attr({
+                              type: "range",
+                              list: `${q.id}_ticks`,
+                              id: `question_${q.id}`,
+                              name: `question_${q.id}`,
+                              min: 1,
+                              max: 5,
+                              value: 3
+                            })
+                        )
                     )
-                )
-            );
-        });
+                );
+            })
+          )
+          .catch(err => console.error(err));
       });
     </script>
   </head>
