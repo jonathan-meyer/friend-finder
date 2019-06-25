@@ -14,44 +14,65 @@
           console.log($(this).serializeArray());
         });
 
-        $.each(
-          [{ text: "I like the blue sky." }, { text: "I like the blue sky." }],
-          function(i, q) {
-            const id = `question_${i}`;
-
-            $("#questions").append(
+        [
+          { id: 0, text: "I like the blue sky." },
+          { id: 1, text: "I like the blue water." }
+        ].map(function(q) {
+          $("#questions")
+            .addClass("")
+            .append(
               $("<div>")
-                .addClass("form-group p-3")
+                .addClass("card mb-3")
                 .append(
-                  $("<label>")
-                    .attr("for", id)
-                    .text(q.text),
-                  $("<input>").attr({
-                    type: "range",
-                    list: "tickmarks",
-                    class: "form-control-range",
-                    id: id,
-                    name: id,
-                    min: 1,
-                    max: 5,
-                    value: 3
-                  }),
-                  $("<datalist>")
-                    .attr({
-                      id: "tickmarks",
-                      style: "display:none"
-                    })
+                  $("<div>")
+                    .addClass("card-header")
                     .append(
-                      $("<option>").attr({
-                        value: 1,
-                        label: "Strongly Disagree"
-                      }),
-                      $("<option>").attr({ value: 5, label: "Strongly Agree" })
+                      $("<label>")
+                        .attr({ for: `question_${q.id}` })
+                        .text(q.text)
+                    ),
+                  $("<div>")
+                    .addClass("card-body")
+                    .append(
+                      $("<datalist>")
+                        .attr({ id: `${q.id}_ticks` })
+                        .css({
+                          display: "flex",
+                          justifyContent: "space-between"
+                        })
+                        .append(
+                          new Array(5)
+                            .fill(0)
+                            .map((v, i) => i + 1)
+                            .map(function(v) {
+                              return $("<option>")
+                                .attr({
+                                  value: v,
+                                  label:
+                                    v === 1
+                                      ? "Strongly Disagree"
+                                      : v === 5
+                                      ? "Strongly Agree"
+                                      : ""
+                                })
+                                .css({ fontSize: "x-small" });
+                            })
+                        ),
+                      $("<input>")
+                        .addClass("form-control-range")
+                        .attr({
+                          type: "range",
+                          list: `${q.id}_ticks`,
+                          id: `question_${q.id}`,
+                          name: `question_${q.id}`,
+                          min: 1,
+                          max: 5,
+                          value: 3
+                        })
                     )
                 )
             );
-          }
-        );
+        });
       });
     </script>
   </head>
@@ -65,7 +86,7 @@
         <div class="card-body">
           <form>
             <div id="questions"></div>
-            <input type="submit" class="btn btn-primary" />
+            <input type="submit" class="btn btn-outline-primary" />
           </form>
         </div>
 
