@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Survey</title>
+    <title>👩‍❤️‍👨️ Friend Finder :: Survey</title>
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css" />
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.js"></script>
@@ -81,12 +81,28 @@
     <div class="container p-3">
       <div class="card">
         <div class="card-header">
-          <h3>Survey</h3>
+          <h1>👩‍🔬️ The Super Smart Survey</h1>
         </div>
 
         <div class="card-body">
           <form>
+            <div class="form-group">
+              <label for="name">Name (Required)</label>
+              <input type="text" id="name" name="name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="photo_link">Link to a photo (Required)</label>
+              <input
+                type="text"
+                id="photo_link"
+                name="photo_link"
+                class="form-control"
+              />
+            </div>
+
             <div id="questions"></div>
+
             <input type="submit" class="btn btn-outline-primary" />
           </form>
         </div>
