@@ -1,12 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Survey</title>
-</head>
-<body>
-    
-</body>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css" />
+    <script src="/jquery/dist/jquery.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.js"></script>
+    <script>
+      $(function() {
+        $("form").on("submit", function(e) {
+          e.preventDefault();
+          console.log($(this).serializeArray());
+        });
+
+        $.each(
+          [{ text: "I like the blue sky." }, { text: "I like the blue sky." }],
+          function(i, q) {
+            const id = `question_${i}`;
+
+            $("#questions").append(
+              $("<div>")
+                .addClass("form-group p-3")
+                .append(
+                  $("<label>")
+                    .attr("for", id)
+                    .text(q.text),
+                  $("<input>").attr({
+                    type: "range",
+                    list: "tickmarks",
+                    class: "form-control-range",
+                    id: id,
+                    name: id,
+                    min: 1,
+                    max: 5,
+                    value: 3
+                  }),
+                  $("<datalist>")
+                    .attr({
+                      id: "tickmarks",
+                      style: "display:none"
+                    })
+                    .append(
+                      $("<option>").attr({
+                        value: 1,
+                        label: "Strongly Disagree"
+                      }),
+                      $("<option>").attr({ value: 5, label: "Strongly Agree" })
+                    )
+                )
+            );
+          }
+        );
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container p-3">
+      <div class="card">
+        <div class="card-header">
+          <h3>Survey</h3>
+        </div>
+
+        <div class="card-body">
+          <form>
+            <div id="questions"></div>
+            <input type="submit" class="btn btn-primary" />
+          </form>
+        </div>
+
+        <div class="card-footer"></div>
+      </div>
+    </div>
+  </body>
 </html>
