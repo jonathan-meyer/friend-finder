@@ -19,5 +19,5 @@ describe("Friends", () => {
 
   it("add()", () => {
     expect(Friends.add).toEqual(expect.any(Function));
-\  });
+  });
 });

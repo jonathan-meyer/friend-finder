@@ -24,11 +24,27 @@ router.get("/friends", (req, res) => {
 
 router.post("/friends", (req, res) => {
   const { body } = req;
-  const calc = new FriendCalculator(Friends.get());
 
-  Friends.add(body.name, body.photo, body.scores);
+  console.log({ body });
 
-  res.json();
+  if (body) {
+    const friend_calculator = new FriendCalculator(Friends.get());
+
+    const data = {
+      friend: friend_calculator.getHigestMatch(body.name, body.scores),
+      me: {
+        name: body.name,
+        photo: body.photo,
+        scores: body.scores
+      }
+    };
+
+    Friends.add(body.name, body.photo, body.scores);
+
+    res.json(data);
+  } else {
+    res.status(400).end();
+  }
 });
 
 router.get("/questions", (req, res) => {

@@ -17,11 +17,11 @@ const add = (name, photo = "/avatar-blank-male.png", scores = []) => {
     throw "name param required";
   }
 
-  let data = this.get();
+  let data = get();
 
-  data.push({ name, photo, scores: scores.map(s => Number(s)) });
+  data.push({ name, photo, scores });
 
-  this.set(data);
+  set(data);
 
   return data;
 };

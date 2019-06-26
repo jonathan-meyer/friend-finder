@@ -2,34 +2,42 @@ const FriendCalculator = require("../FriendCalculator");
 
 const friends = [
   {
+    photo: "",
     name: "Ahmed",
     scores: [5, 1, 4, 4, 5, 1, 2, 5, 4, 1]
   },
   {
+    photo: "",
     name: "Larry",
     scores: [3, 3, 3, 3, 1, 3, 3, 5, 3, 3]
   },
   {
+    photo: "",
     name: "Tom",
     scores: [1, 5, 1, 1, 1, 1, 1, 1, 1, 1]
   },
   {
+    photo: "",
     name: "Fred",
     scores: [2, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   },
   {
+    photo: "",
     name: "Barny",
     scores: [1, 2, 4, 3, 2, 5, 1, 4, 3, 3]
   },
   {
+    photo: "",
     name: "High",
     scores: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
   },
   {
+    photo: "",
     name: "Low",
     scores: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   },
   {
+    photo: "",
     name: "Mid",
     scores: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
   }
@@ -58,11 +66,18 @@ describe("FriendCalculator", () => {
   });
 
   it("calculateMatches() should return a list with matches", () => {
-    const profile = {
-      name: "Test#0",
-      scores: [1, 2, 3, 4, 5, 5, 4, 3, 2, 1]
-    };
-    const matches = fc.calculateMatches(profile);
+    const matches = fc.calculateMatches("Test#0", [
+      1,
+      2,
+      3,
+      4,
+      5,
+      5,
+      4,
+      3,
+      2,
+      1
+    ]);
 
     console.log({ matches });
 
@@ -70,7 +85,7 @@ describe("FriendCalculator", () => {
       expect.arrayContaining([
         expect.objectContaining({
           name: expect.any(String),
-          match: expect.any(Number),
+          matchPercent: expect.any(Number),
           scores: expect.arrayContaining([expect.any(Number)])
         })
       ])
@@ -78,57 +93,37 @@ describe("FriendCalculator", () => {
   });
 
   it("getHigestMatch() should return friend `Larry`", () => {
-    const profile = {
-      name: "Test#1",
-      scores: [5, 1, 4, 4, 5, 1, 2, 5, 4, 1]
-    };
-
-    expect(fc.getHigestMatch(profile)).toEqual(
+    expect(fc.getHigestMatch("Test#1", [5, 1, 4, 4, 5, 1, 2, 5, 4, 1])).toEqual(
       expect.objectContaining({
         name: "Ahmed",
-        match: 1
+        matchPercent: 1
       })
     );
   });
 
   it("getHigestMatch() should return friend `Larry`", () => {
-    const profile = {
-      name: "Test#2",
-      scores: [5, 5, 3, 5, 2, 3, 3, 5, 3, 3]
-    };
-
-    expect(fc.getHigestMatch(profile)).toEqual(
+    expect(fc.getHigestMatch("Test#2", [5, 5, 3, 5, 2, 3, 3, 5, 3, 3])).toEqual(
       expect.objectContaining({
         name: "Larry",
-        match: 0.825
+        matchPercent: 0.825
       })
     );
   });
 
   it("getHigestMatch() should return friend `Low`", () => {
-    const profile = {
-      name: "Test#3",
-      scores: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    };
-
-    expect(fc.getHigestMatch(profile)).toEqual(
+    expect(fc.getHigestMatch("Test#3", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])).toEqual(
       expect.objectContaining({
         name: "Low",
-        match: 1
+        matchPercent: 1
       })
     );
   });
 
   it("getHigestMatch() should return friend `High`", () => {
-    const profile = {
-      name: "Test#4",
-      scores: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
-    };
-
-    expect(fc.getHigestMatch(profile)).toEqual(
+    expect(fc.getHigestMatch("Test#4", [5, 5, 5, 5, 5, 5, 5, 5, 5, 5])).toEqual(
       expect.objectContaining({
         name: "High",
-        match: 1
+        matchPercent: 1
       })
     );
   });

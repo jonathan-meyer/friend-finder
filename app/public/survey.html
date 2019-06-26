@@ -18,7 +18,15 @@
           submitHandler: function(form) {
             const data = $(form)
               .serializeArray()
-              .reduce((p, c) => Object.assign(p, { [c.name]: c.value }), {});
+              .reduce(
+                (p, c) =>
+                  Object.assign(p, {
+                    [c.name]: c.name.match(/^question_/i)
+                      ? Number(c.value)
+                      : c.value
+                  }),
+                {}
+              );
 
             const profile = {
               name: data.name,
@@ -29,11 +37,18 @@
                 .map(k => data[k])
             };
 
-            $.post("/api/friends", profile)
+            $.post({
+              url: "/api/friends",
+              data: JSON.stringify(profile),
+              contentType: "application/json"
+            })
               .then(function(data) {
                 console.log({ data });
+
                 $(form).trigger("reset");
 
+                $("#match-name").text(data.friend.name);
+                $("#match-photo").attr("src", data.friend.photo);
                 $("#results").modal("show");
               })
               .catch(console.error);
@@ -168,7 +183,14 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Your best match is "<span id="match"></span>"</p>
+            <p>
+              Your best match is <b><span id="match-name"></span></b>
+            </p>
+            <img
+              class="img-thumbnail mx-auto d-block"
+              id="match-photo"
+              alt="match photo"
+            />
           </div>
           <div class="modal-footer">
             <button

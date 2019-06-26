@@ -7,13 +7,13 @@ const server = {
       .use(express.json())
 
       .use((req, res, next) => {
-        console.log(`${req.method} ${req.url}`);
+        console.log(`${req.method} ${req.url} ${req.headers["content-type"]}`);
         next();
       })
 
       .use("/api", require("./app/routing/apiRoutes"))
       .use("/", require("./app/routing/htmlRoutes"))
-      
+
       .listen(port, err => {
         console.log(`Listening to port ${port}`);
       })
