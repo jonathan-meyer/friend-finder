@@ -2,7 +2,7 @@
   "name": "friend-finder",
   "version": "1.0.0",
   "description": "Lets find a friend (because Facebook sucks)",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon .",
     "test": "jest",
@@ -15,6 +15,7 @@
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
+    "jquery-validation": "^1.19.1",
     "read-json": "^1.0.3",
     "write-json": "^3.0.1"
   },

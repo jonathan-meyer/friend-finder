@@ -4,11 +4,11 @@ describe("loading express", () => {
   var server;
 
   beforeEach(() => {
-    server = require("../server");
+    server = require("../server").start(8080);
   });
 
-  afterEach(function() {
-    server.close();
+  afterEach(done => {
+    server.close(done);
   });
 
   it("responds to / with html", done => {
