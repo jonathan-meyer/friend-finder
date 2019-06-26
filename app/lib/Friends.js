@@ -4,9 +4,12 @@ const path = require("path");
 
 const file = path.resolve("app", "data", "friends.json");
 
-const all = () => {
-  let data = readJson.sync(file);
-  return data;
+const get = () => {
+  return readJson.sync(file);
+};
+
+const set = data => {
+  writeJson.sync(file, data);
 };
 
 const add = (name, photo = "/avatar-blank-male.png", scores = []) => {
@@ -14,13 +17,17 @@ const add = (name, photo = "/avatar-blank-male.png", scores = []) => {
     throw "name param required";
   }
 
-  let data = readJson.sync(file);
+  let data = this.get();
+
   data.push({ name, photo, scores: scores.map(s => Number(s)) });
-  writeJson.sync(file, data);
+
+  this.set(data);
+
   return data;
 };
 
 module.exports = {
-  all,
+  get,
+  set,
   add
 };

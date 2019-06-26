@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const friends = require("../data/friends");
+const Friends = require("../lib/Friends");
 const Question = require("../lib/Question");
+const FriendCalculator = require("../lib/FriendCalculator");
 
 let x = 0;
 const questions = [
@@ -18,12 +19,16 @@ const questions = [
 ];
 
 router.get("/friends", (req, res) => {
-  res.json(friends.all());
+  res.json(Friends.get());
 });
 
 router.post("/friends", (req, res) => {
   const { body } = req;
-  res.json(friends.add(body.name, body.photo, body.scores));
+  const calc = new FriendCalculator(Friends.get());
+
+  Friends.add(body.name, body.photo, body.scores);
+
+  res.json();
 });
 
 router.get("/questions", (req, res) => {
