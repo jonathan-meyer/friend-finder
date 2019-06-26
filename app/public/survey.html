@@ -16,7 +16,27 @@
             name: "required"
           },
           submitHandler: function(form) {
-            console.log({ form: $(form).serializeArray() });
+            const data = $(form)
+              .serializeArray()
+              .reduce((p, c) => Object.assign(p, { [c.name]: c.value }), {});
+
+            const profile = {
+              name: data.name,
+              photo: data.photo_link || "/avatar-blank-male.png",
+              scores: Object.keys(data)
+                .filter(k => k.match(/^question_/i))
+                .sort()
+                .map(k => data[k])
+            };
+
+            $.post("/api/friends", profile)
+              .then(function(data) {
+                console.log({ data });
+                $(form).trigger("reset");
+
+                $("#results").modal("show");
+              })
+              .catch(console.error);
           }
         });
 
@@ -114,7 +134,51 @@
         </div>
 
         <div class="card-footer">
-          <a href="/api/friends">Friends</a>
+          [
+          <a href="/api/friends" target="_blank">Friends API</a> |
+          <a href="/api/questions" target="_blank">Questions API</a> |
+          <a
+            href="https://github.com/jonathan-meyer/friend-finder"
+            target="_blank"
+            >GitHub Repo</a
+          >
+          ]
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="results"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="resultsLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="resultsLabel">Results</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Your best match is "<span id="match"></span>"</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </div>
