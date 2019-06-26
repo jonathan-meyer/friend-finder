@@ -13,9 +13,9 @@ const add = (name, photo = "/avatar-blank-male.png", scores = []) => {
   if (typeof name !== "string" || name.length === 0) {
     throw "name param required";
   }
-  
+
   let data = readJson.sync(file);
-  data.push({ name, photo, scores });
+  data.push({ name, photo, scores: scores.map(s => Number(s)) });
   writeJson.sync(file, data);
   return data;
 };
